@@ -5,7 +5,7 @@ import { fromHex } from "@unstoppablejs/utils"
 import * as fs from "node:fs/promises"
 import { Subject } from "rxjs"
 import { _void, compact, Decoder, Enum, Struct, u32, u8, Vector } from "scale-ts"
-import { SystemStorageEntries } from "./translation"
+import { SystemStorageEntries } from "./translation2"
 
 export const polkadotProvider = ScProvider(WellKnownChain.polkadot)
 
@@ -33,5 +33,8 @@ finalizedBlockHashSubject.subscribe(async (blockHash) => {
     null,
   )
 
+  const eventsBytes = fromHex(values[eventsStorageKey])
+
+  console.log(SystemStorageEntries.Events.dec(eventsBytes))
   /*   console.log(values[eventsStorageKey].slice(0, 10)) */
 })
