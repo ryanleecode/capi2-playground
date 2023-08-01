@@ -4,6 +4,7 @@ import { ScProvider } from "@unstoppablejs/sc-provider"
 import { Subject } from "rxjs"
 import { type CodecType } from "scale-ts"
 import {
+  cFrame_systemPhase,
   cPallet_balancesPalletEvent,
   cPolkadot_runtimeRuntimeEvent,
   SystemStorageEvents,
@@ -29,6 +30,9 @@ const chainHeadFollower = chainHead(true, (event) => {
 
 finalizedBlockHashSubject.subscribe(async (blockHash) => {
   const eventsStorageKey = SystemStorageEvents.enc()
+
+  const extrinsics = await chainHeadFollower.body(blockHash)
+
   const { values } = await chainHeadFollower.storage(
     blockHash,
     { value: [eventsStorageKey] },
@@ -37,13 +41,29 @@ finalizedBlockHashSubject.subscribe(async (blockHash) => {
 
   const transferEvents = SystemStorageEvents
     .dec(values[eventsStorageKey])
-    .map(({ event }) => event)
-    .filter(isBalancePalletEvent)
-    .map((event) => event.value)
-    .filter(isBalanceTransferEvent)
+    .map(({ event, phase }) => {
+      if (
+        isApplyExtrinsicPhase(phase)
+        && isBalancePalletEvent(event)
+        && isBalanceTransferEvent(event.value)
+      ) {
+        return { event: event.value.value, extrinsic: extrinsics[phase.value] }
+      }
+    })
+    .filter(isDefined)
 
   console.log("transferEvents", transferEvents)
 })
+
+function isDefined<T>(val: T | undefined | null): val is T {
+  return val !== undefined && val !== null
+}
+
+function isApplyExtrinsicPhase(
+  systemPhase: CodecType<typeof cFrame_systemPhase>,
+): systemPhase is CodecType<typeof cFrame_systemPhase> & { tag: "ApplyExtrinsic" } {
+  return systemPhase.tag === "ApplyExtrinsic"
+}
 
 function isBalancePalletEvent(
   runtimeEvent: CodecType<typeof cPolkadot_runtimeRuntimeEvent>,

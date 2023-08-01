@@ -24,7 +24,7 @@ import {
   Vector,
 } from "scale-ts"
 
-const cFrame_systemPhase = Enum({
+export const cFrame_systemPhase = Enum({
   ApplyExtrinsic: u32,
   Finalization: _void,
   Initialization: _void,
