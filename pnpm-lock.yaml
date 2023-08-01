@@ -24,8 +24,8 @@ dependencies:
     specifier: ^0.2.0
     version: 0.2.0(@substrate/connect@0.7.31)
   '@unstoppablejs/substrate-bindings':
-    specifier: 0.0.0-experimental-d05a4674-ed4e-466d-bf47-213030678671
-    version: 0.0.0-experimental-d05a4674-ed4e-466d-bf47-213030678671
+    specifier: 0.0.0-experimental-1519a4ce-142b-4667-bc73-f8913a6dcd50
+    version: 0.0.0-experimental-1519a4ce-142b-4667-bc73-f8913a6dcd50
   '@unstoppablejs/utils':
     specifier: ^1.1.0
     version: 1.1.0
@@ -533,8 +533,8 @@ packages:
       '@unstoppablejs/provider': 0.0.1
     dev: false
 
-  /@unstoppablejs/substrate-bindings@0.0.0-experimental-d05a4674-ed4e-466d-bf47-213030678671:
-    resolution: {integrity: sha512-lC8W9KJ75oUvOTupHKPzxCaizejlT3MBHvTJKb/OQx8LlOtAZ6+ZLAhgRobGPS57R8fxnx2HLXSDUDUOrpR1kw==}
+  /@unstoppablejs/substrate-bindings@0.0.0-experimental-1519a4ce-142b-4667-bc73-f8913a6dcd50:
+    resolution: {integrity: sha512-+8Un1H8JCB9AO+RWu926NMQ3BSHRpDnHMnN6t9s6hUy797p2dRTOtOdCJmhjSwQCbA99J5/bu+SmnzokcuLwQw==}
     dependencies:
       '@noble/hashes': 1.3.1
       '@unstoppablejs/utils': 1.1.0
